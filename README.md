@@ -1,7 +1,7 @@
 # Team Project Name
 
 List of participants and affiliations:
-- Participant, Affiliation (Team Leader)
+- Laura Hughes, Scripps Research (Team Leader)
 - Participant, Affiliation
 
 ## Project Goals

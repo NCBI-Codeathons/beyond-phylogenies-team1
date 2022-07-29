@@ -8,6 +8,14 @@ library(plotly)
 library(psych)
 library(rattle)
 library(caret)
+library(chimeraviz)
+
+library(clustree)
+
+devtools::install_github(
+  "stianlagstad/chimeraviz",
+  build_vignettes = TRUE)
+
 # data cleaning
 
 data_1 <- read.delim('.dataset/.input-data.1.aa.fasta', header = TRUE, sep = "\t")
@@ -15,6 +23,18 @@ data_2 <- read.delim('.dataset/.input-data.1.nt.fasta', header = TRUE, sep = "\t
 data_3 <- read.delim('.dataset/.input-data.1.txt', header = TRUE, sep = "\t")
 d3 <- data_3[!(duplicated(data_3) | duplicated(data_3, fromLast = TRUE)), ]
 
+
+# quick check missing values
+
+head(is.na(data_3))
+
+data_3_missing <- is.na(data_3)
+
+# replace missing values of a brain weight with mean brain weight
+
+data_3[is.na(data_3)] <- mean(data_3, na.rm = TRUE)
+
+data_3_clean <- data_3[complete.cases(data_3),]
 
 # data assessment
 
@@ -75,5 +95,11 @@ data_3 %>%
   ylab("Count")+coord_cartesian(x=c(-0.5,0.5))
 
 
+# Tree experimental representations
+library(clustree)
+
+names(data_3_clean) <- c("cds_id", "acc1", "acc2", "acc3", "acc4", "acc5", "acc6")
+
+clustree(data_3_clean[1:5,], prefix = "acc", layout = "sugiyama", node_colour = "purple", node_size = 10, node_colour_aggr = "mean")
 
 

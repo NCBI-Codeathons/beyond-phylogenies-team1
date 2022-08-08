@@ -18,7 +18,7 @@ fi
 
 if [ "$(uname)" == "Darwin" ]; then
     set -x
-    zcat <"$query_file" | cut -f2 | time -l -- "$convergraph" --reference-file "$ref_file" >"$output_file" 2>"$log" \
+    zcat <"$query_file" | cut -f2 | time -l -- "$convergraph" --query-has-header --reference-file "$ref_file" >"$output_file" 2>"$log" \
         || {
             cat "$log"
             exit 1
@@ -26,7 +26,7 @@ if [ "$(uname)" == "Darwin" ]; then
 # Linux
 else
     set -x
-    zcat "$query_file" | cut -f2 | time -v -- "$convergraph" --reference-file "$ref_file" >"$output_file" 2>"$log" \
+    zcat "$query_file" | cut -f2 | time -v -- "$convergraph" --query-has-header --reference-file "$ref_file" >"$output_file" 2>"$log" \
         || {
             cat "$log"
             exit 1
